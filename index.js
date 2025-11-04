@@ -19,7 +19,21 @@ bot.on("message", async function (msg) {
       },
     });
   } else if (text == "Boshlash 🔥") {
-    bot.sendMessage(chatId, "Salom, sizga qanday yordam bera olaman?");
+    // bot.sendMessage(chatId, "Salom, sizga qanday yordam bera olaman?");
+    bot.sendPhoto(chatId, "./assets/images/lambo.jpg", {
+      caption: `
+      Lamborghini Urus is the first Super Sport Utility Vehicle in the world, merging the soul of a super sports car with the practical functionality of an SUV.
+      `,
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: "Ma'lumot", callback_data: "info" },
+            { text: "Rasmlar", callback_data: "photos" },
+          ],
+          [{ text: "Narxi", callback_data: "price" }],
+        ],
+      },
+    });
   } else if (text == "Menu 😜") {
     const kutingXabari = await bot.sendMessage(chatId, "Iltimos kuting...");
 
@@ -38,6 +52,26 @@ bot.on("message", async function (msg) {
   }
 
   console.log(msg);
+});
+
+bot.on("callback_query", function (query) {
+  console.log(query);
+  const data = query.data;
+  const chatId = query.message.chat.id;
+
+  if (data == "info") {
+    bot.sendMessage(chatId, "Bu yerda Lamborghini haqida ma'lumot olasiz");
+  } else if (data == "photos") {
+    bot.sendPhoto(chatId, "./assets/images/lambo.jpg");
+  } else if (data == "price") {
+    bot.sendMessage(chatId, "175,000 dollar", {
+      reply_markup: {
+        inline_keyboard: [[{ text: "Sotib olish", callback_data: "buy" }]],
+      },
+    });
+  } else if (data == "buy") {
+    bot.sendMessage(chatId, "Pullarni Soliyajonga bering... Mashina unda");
+  }
 });
 
 console.log("Bot ishga tushdi...");
